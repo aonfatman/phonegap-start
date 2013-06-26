@@ -1,229 +1,121 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<!--<html>
+<html>
     <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
+        <title>PhoneGap Camera API Sample</title>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1"> 
+        <meta name="Copyright" content="&copy; 2012, Intel Corporation" />
+        <!--
+           * Copyright (c) 2012, Intel Corporation. All rights reserved.
+           * File revision: 04 October 2012
+           * Please see http://software.intel.com/html5/license/samples 
+           * and the included README.md file for license terms and conditions.
+        -->
+        
+        <script src="cordova.js"></script>
+        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+        <script type="text/javascript" src="js/camera.js"></script>
+        
+        <link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css"> 
+        <link rel="stylesheet" href="css/camera.css" type="text/css">
     </head>
-    <body>
-        <div class="app">
-            <h1>Cherawich</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+    
+    <body onload="onLoad()">
+		
+        <!-- Home Page (menu page) -->
+        <div data-role="page" id="home_page" data-theme="a">
+            <div data-role="header">
+                <h3>PhoneGap Camera API Sample</h3>
+                <a href="#settings_page" data-role="button" id="settings_button" data-theme="b" data-mini="true" class="ui-btn-right">Settings</a>
+            </div>
+            <div data-role="content">
+                <a href="#" data-role="button" id="open_camera_button">Capture a photo with camera</a>
+                <a href="#" data-role="button" id="open_lib_button">Open Photo Library</a>
+                <a href="#" data-role="button" id="open_alb_button">Open saved photo album</a>
+                
+                <div id="settings_info" class="ui-body ui-body-b info"></div>
+            </div>
+            <div data-role="footer" class="stickbottom">
+                <div><a rel="LICENSE" href="http://software.intel.com/html5/license/samples" target="_blank">License Terms and Conditions</a></div>
             </div>
         </div>
-        <script type="text/javascript" src="phonegap.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
-    </body>
-</html>-->
-<!--<!DOCTYPE HTML>
-<html>
-    <head>
-	<meta name="viewport" content="width=320; user-scalable=no" />
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<title>ColorThief Demo</title>
-	
-	<script type="text/javascript" charset="utf-8" src="jquery-2.0.0.min.js"></script>
-	<script type="text/javascript" charset="utf-8" src="quantize.js"></script>
-	<script type="text/javascript" charset="utf-8" src="color-thief.js"></script>
         
-	<style>
-	#yourimage {
-		width:100%;	
-	}
-	
-	#swatches {
-		width: 100%;
-		height: 50px;	
-	}
- 
-	.swatch {
-		width:18%;
-		height: 50px;
-		border-style:solid;
-		border-width:thin;	
-		float: left;
-		margin-right: 3px;	
-	}
-	</style>
-	</head>
- 
-	<body>
- 
-		<input type="file" capture="camera" accept="image/*" id="takePictureField">
+        <!-- Settings edit page -->
+        <div data-role="page" id="settings_page" data-theme="a">
+            <div data-role="header">
+                <a href="#home_page" id="settings_cancel_button" data-role="button" data-mini="true" class="ui-btn-left">Cancel</a>
+                <h3>Picture Settings</h3>
+                <a href="#home_page" id="settings_ok_button" data-role="button" data-theme="b" data-mini="true" class="ui-btn-right">Save</a>
+            </div>
+            
+            <div data-role="content">
+            
+                <form name="settings_form" id="settings_form">
+                    
+                    <div data-role="collapsible-set" data-inset="false" data-mini="true">
+
+                        <div data-role="collapsible" data-collapsed="false">
+                            <h3>Picture editing settings</h3>
+                        	
+                            <label for="quality_input" data-mini="true">Picture quality:</label>
+                            <input id="quality_input" name="quality_input" type="range" min="0" max="100" step="5" value="40" data-mini="true"/>
+                            
+                            <label for="width_input" data-mini="true">Target width:</label>
+                            <input id="width_input" name="width_input" type="range" min="50" max="1500" step="25" value="500" data-mini="true"/>
+                            
+                            <label for="height_input" data-mini="true">Target height:</label>
+                            <input id="height_input" name="height_input" type="range" min="50" max="1500" step="25" value="500" data-mini="true"/>
+                            
+                            <p><label data-mini="true">Picture editing:</label></p>
+                            <div data-role="controlgroup">
+                                <label for="edit_input" data-mini="true">Allow result zoom and crop</label>
+                                <input id="edit_input" name="edit_input" type="checkbox" checked data-mini="true">
+                                
+                                <label for="orient_input" data-mini="true">Allow orientation correction</label>
+                                <input id="orient_input" name="orient_input" type="checkbox" checked data-mini="true">
+                            </div>
+                    	</div>
+                    	
+                    	<div data-role="collapsible">
+                            <h3>Picture saving options</h3>
+                        	
+                            <label for="encod_input" data-mini="true">Choose encoding type:</label>
+                            <select id="encod_input" name="encod_input" data-mini="true">
+                              <option value="0" selected="selected">JPEG</option>
+                              <option value="1">PNG</option>
+                            </select>
+                                  
+                            <label for="save_input" data-mini="true">Save picture to photo album</label>
+                            <select name="save_input" id="save_input" data-role="slider" data-mini="true" data-theme="a" data-track-theme="a">
+                                <option value="false">No</option>
+                            	<option value="true" selected="selected">Yes</option>
+                            </select>
+                    	</div>
+                        
+                        <div data-role="collapsible">
+                            <h3>Picture opening options</h3>
+                            <label for="media_input" data-mini="true">Choose media type:</label>
+                            <select id="media_input" name="media_input" data-mini="true">
+                              <option value="0" selected="selected">Pictures</option>
+                              <option value="1">Videos</option>
+                              <option value="2">All media</option>
+                            </select>
+                        </div>
+                    </div>
+                  </form>
+            </div>
+        </div>
         
-		<img id="yourimage">
- 
-		<div id="swatches">
-			<div id="swatch0" class="swatch"></div>
-			<div id="swatch1" class="swatch"></div>
-			<div id="swatch2" class="swatch"></div>
-			<div id="swatch3" class="swatch"></div>
-			<div id="swatch4" class="swatch"></div>
-		</div>
-		
-    <script>
-	var desiredWidth;
- 
-    $(document).ready(function() {
-        console.log('onReady');
-		$("#takePictureField").on("change",gotPic);
-		$("#yourimage").load(getSwatches);
-		desiredWidth = window.innerWidth;
-        
-        if(!("url" in window) && ("webkitURL" in window)) {
-            window.URL = window.webkitURL;   
-        }
-		
-	});
- 
-	function getSwatches(){
-		var colorArr = createPalette($("#yourimage"), 5);
-		for (var i = 0; i < Math.min(5, colorArr.length); i++) {
-			$("#swatch"+i).css("background-color","rgb("+colorArr[i][0]+","+colorArr[i][1]+","+colorArr[i][2]+")");
-			console.log($("#swatch"+i).css("background-color"));
-		}
-	}	
-	
-    //Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
-	function gotPic(event) {
-        if(event.target.files.length == 1 && 
-           event.target.files[0].type.indexOf("image/") == 0) {
-            $("#yourimage").attr("src",URL.createObjectURL(event.target.files[0]));
-        }
-	}
-	
-	
-        
-    </script>    
+        <!-- Camera capture result page -->
+        <div data-role="page" id="result_page" data-theme="a">
+            <div data-role="header">
+                <h3>Result</h3>
+                <a href="#home_page" id="home_button" data-role="button" data-theme="b" data-mini="true" class="ui-btn-right">Back to menu</a>
+            </div>
+            <div data-role="content">
+                <h3>Result picture:</h3>
+                <img id="pic" src="" style="display: none; border: 2px black;"/>
+            </div>
+        </div>
 	</body>
- 
-</html>-->
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Capture Photo</title>
-
-    <script type="text/javascript" charset="utf-8" src="cordova-x.x.x.js"></script>
-    <script type="text/javascript" charset="utf-8">
-
-    var pictureSource;   // picture source
-    var destinationType; // sets the format of returned value 
-
-    // Wait for Cordova to connect with the device
-    //
-    document.addEventListener("deviceready",onDeviceReady,false);
-
-    // Cordova is ready to be used!
-    //
-    function onDeviceReady() {
-        pictureSource=navigator.camera.PictureSourceType;
-        destinationType=navigator.camera.DestinationType;
-    }
-
-    // Called when a photo is successfully retrieved
-    //
-    function onPhotoDataSuccess(imageData) {
-      // Uncomment to view the base64 encoded image data
-      // console.log(imageData);
-
-      // Get image handle
-      //
-      var smallImage = document.getElementById('smallImage');
-
-      // Unhide image elements
-      //
-      smallImage.style.display = 'block';
-
-      // Show the captured photo
-      // The inline CSS rules are used to resize the image
-      //
-      smallImage.src = "data:image/jpeg;base64," + imageData;
-    }
-
-    // Called when a photo is successfully retrieved
-    //
-    function onPhotoURISuccess(imageURI) {
-      // Uncomment to view the image file URI 
-      // console.log(imageURI);
-
-      // Get image handle
-      //
-      var largeImage = document.getElementById('largeImage');
-
-      // Unhide image elements
-      //
-      largeImage.style.display = 'block';
-
-      // Show the captured photo
-      // The inline CSS rules are used to resize the image
-      //
-      largeImage.src = imageURI;
-    }
-
-    // A button will call this function
-    //
-    function capturePhoto() {
-      // Take picture using device camera and retrieve image as base64-encoded string
-      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
-        destinationType: destinationType.DATA_URL });
-    }
-
-    // A button will call this function
-    //
-    function capturePhotoEdit() {
-      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string  
-      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
-        destinationType: destinationType.DATA_URL });
-    }
-
-    // A button will call this function
-    //
-    function getPhoto(source) {
-      // Retrieve image file location from specified source
-      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
-        destinationType: destinationType.FILE_URI,
-        sourceType: source });
-    }
-
-    // Called if something bad happens.
-    // 
-    function onFail(message) {
-      alert('Failed because: ' + message);
-    }
-
-    </script>
-  </head>
-  <body>
-    <button onclick="capturePhoto();">Capture Photo</button> <br>
-    <button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
-    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
-    <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
-    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
-    <img style="display:none;" id="largeImage" src="" />
-  </body>
 </html>
