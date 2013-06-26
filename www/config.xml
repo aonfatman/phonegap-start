@@ -8,14 +8,29 @@
 
     <name>Capture</name>
 
-    <description>
-        Hello World sample application that responds to the deviceready event.
-    </description>
+       
+<plugin name="Camera" value="CDVCamera" />
 
+<name>PhoneGap Camera API Sample</name>
+    
+    <content src="index.html"/>
+    <icon src="icon.png" width="256" height="256" />
+    
+    <description>
+        Capture a photo using a device camera and edit (zoom and crop) the picture.
+    </description>
+    
     <author href="http://phonegap.com" email="support@phonegap.com">
         PhoneGap Team
     </author>
-<plugin name="Camera" value="CDVCamera" />
+        
+    <preference name="phonegap-version" value="2.0.0" />
+    <feature name="http://api.phonegap.com/1.0/camera"/>
+    <feature name="http://api.phonegap.com/1.0/file"/>      
+
+    <!-- for Android -->
+    <preference name="orientation" value="portrait" />
+    <preference name="android-minSdkVersion" value="9" />
     <!--
         Enable individual API permissions here.
         The "device" permission is required for the 'deviceready' event.
