@@ -67,6 +67,11 @@
       //alert("Open Camera");
       //navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
       //destinationType: destinationType.DATA_URL});
+      var i=0;
+      while(i<3)
+      {
+      	i++;
+      }
       navigator.device.capture.captureImage(onPhotoDataSuccess,
         onFail,{  limit: 2,
         destinationType: destinationType.DATA_URL,saveToPhotoAlbum: true});
