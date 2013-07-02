@@ -2,10 +2,7 @@
 <html>
   <head>
     <title>Capture Photo</title>
-
-  </head>
-  <body>
-     <script type="text/javascript" charset="utf-8" src="js/cordova-ios.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/cordova-ios.js"></script>
      <script type="text/javascript" charset="utf-8">
       var pictureSource;   // picture source
       var destinationType;
@@ -29,7 +26,9 @@
       alert('Failed because: ' + message);
     }
     </script>
-    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
-    <img style="display:none;" id="largeImage" src="" />
+  </head>
+  <body>
+     capturePhoto();
+    
   </body>
 </html>
