@@ -9,8 +9,8 @@
     <name>Capture</name>
 
        
-<plugin name="Camera" value="CDVCamera" />
 
+<plugin name="Camera" value="CDVCamera" />
 <name>PhoneGap Camera API Sample</name>
     
     <content src="index.html"/>
