@@ -1,5 +1,27 @@
 <html>
-  <body>
-    <input type=file accept="image/*">
-  </body>
+        <title></title>
+        <head>
+                <link rel="stylesheet" href="css/main.css" type="text/css" media="screen" title="default" />
+        </head>
+        <body>
+                <script src="js/jquery-1.7.1.min.js" type="text/javascript"></script>
+                <script>
+                        navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+                                destinationType: Camera.DestinationType.DATA_URL
+                        });
+
+                        function onSuccess(imageData) {
+                                var image = document.getElementById('myImage');
+                                image.src = "data:image/jpeg;base64," + imageData;
+                        }
+
+                        function onFail(message) {
+                            alert('Failed because: ' + message);
+                        }
+                        
+                        
+                </script>
+               
+                
+        </body>
 </html>
