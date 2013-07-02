@@ -64,9 +64,15 @@
     //
     function capturePhoto() {
       // Take picture using device camera and retrieve image as base64-encoded string
-      alert("Hello");
+      //alert("Hello");
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
-        destinationType: destinationType.DATA_URL });
+      destinationType: destinationType.DATA_URL });
+      
+      navigator.device.capture.captureImage(onPhotoDataSuccess,
+        onFail,
+        { 
+             limit: 1
+        });
     }
 
     // A button will call this function
@@ -95,6 +101,8 @@
     </script>
   </head>
   <body>
+    <div onclick="capturePhoto();"></div>
     <button onclick="capturePhoto();"style="width:120px;height:320px" >Capture Photo</button>
+    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
   </body>
 </html>
