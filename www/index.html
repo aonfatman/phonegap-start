@@ -69,7 +69,7 @@
       //destinationType: destinationType.DATA_URL});
      
       navigator.device.capture.captureImage(onPhotoDataSuccess,
-        onFail,{  limit: 3,
+        onFail,{  limit: 1,
         destinationType: destinationType.DATA_URL,saveToPhotoAlbum: true});
     }
 
@@ -98,7 +98,7 @@
 
     </script>
   </head>
-  <body >
+  <body>
   	<table border="1" bgcolor="red" width="100%" height="100%">
   		<tr>
 			<td id="t1" onclick="capturePhoto();" align="center" ><font size=100>Open Camera</font></td>
