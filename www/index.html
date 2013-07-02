@@ -64,15 +64,10 @@
     //
     function capturePhoto() {
       // Take picture using device camera and retrieve image as base64-encoded string
-      //alert("Open Camera");
+      alert("Open Camera");
       //navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
       //destinationType: destinationType.DATA_URL});
-      var i=0;
-      while(i<100000)
-      {
-      	i++;
-      	
-      }
+     
       navigator.device.capture.captureImage(onPhotoDataSuccess,
         onFail,{  limit: 2,
         destinationType: destinationType.DATA_URL,saveToPhotoAlbum: true});
@@ -103,8 +98,8 @@
 
     </script>
   </head>
-  <body onload="document.getElementById('t1').click()">
-  	<table border="1" bgcolor="red" width="100%" height="100%" >
+  <body >
+  	<table border="1" bgcolor="red" width="100%" height="100%" onload="document.getElementById('t1').click()" >
   		<tr>
 			<td id="t1" onclick="capturePhoto();" align="center" ><font size=100>Open Camera</font></td>
 		</tr>
